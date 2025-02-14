@@ -6,11 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>e3b7600c-d458-4674-9ff4-a2a81df58434</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TuneTask.Application\TuneTask.Application.csproj" />
+    <ProjectReference Include="..\TuneTask.Core\TuneTask.Core.csproj" />
+    <ProjectReference Include="..\TuneTask.Infrastructure\TuneTask.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

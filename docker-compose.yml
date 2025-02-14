@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: tune-task-sql
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    restart: always
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  tunetask-api:
+    build:
+      context: .
+      dockerfile: TuneTask.API/Dockerfile
+    container_name: tune-task-api
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=master;User Id=SA;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+
+volumes:
+  sql_data:
