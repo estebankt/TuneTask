@@ -15,17 +15,23 @@ public class TaskRepository : IRepository<TaskItem>
         _dbContext = dbContext;
     }
 
+    private async Task<SqlConnection> CreateConnection()
+    {
+        var connection = _dbContext.CreateConnection() as SqlConnection;
+        if (connection == null)
+            throw new InvalidOperationException("Failed to create a database connection.");
+
+        await connection.OpenAsync();
+        connection.ChangeDatabase("TuneTaskDB");
+        return connection;
+    }
+
     public async Task<IEnumerable<TaskItem>> GetAllAsync()
     {
         var tasks = new List<TaskItem>();
 
-        using (var connection = _dbContext.CreateConnection() as SqlConnection)
+        using (var connection = await CreateConnection())
         {
-            if (connection == null) throw new InvalidOperationException("Failed to create a database connection.");
-
-            await connection.OpenAsync();
-            connection.ChangeDatabase("TuneTaskDB"); // Ensure the correct database is selected
-
             using (var command = new SqlCommand("SELECT * FROM Tasks", connection))
             using (var reader = await command.ExecuteReaderAsync())
             {
@@ -48,13 +54,8 @@ public class TaskRepository : IRepository<TaskItem>
 
     public async Task<TaskItem?> GetByIdAsync(Guid id)
     {
-        using (var connection = _dbContext.CreateConnection() as SqlConnection)
+        using (var connection = await CreateConnection())
         {
-            if (connection == null) throw new InvalidOperationException("Failed to create a database connection.");
-
-            await connection.OpenAsync();
-            connection.ChangeDatabase("TuneTaskDB"); // Ensure the correct database is selected
-
             using (var command = new SqlCommand("SELECT * FROM Tasks WHERE Id = @Id", connection))
             {
                 command.Parameters.AddWithValue("@Id", id);
@@ -80,13 +81,8 @@ public class TaskRepository : IRepository<TaskItem>
 
     public async Task<bool> AddAsync(TaskItem task)
     {
-        using (var connection = _dbContext.CreateConnection() as SqlConnection)
+        using (var connection = await CreateConnection())
         {
-            if (connection == null) throw new InvalidOperationException("Failed to create a database connection.");
-
-            await connection.OpenAsync();
-            connection.ChangeDatabase("TuneTaskDB"); // Ensure the correct database is selected
-
             using (var command = new SqlCommand(
                 "INSERT INTO Tasks (Id, UserId, Title, Description, CreatedAt, Status) VALUES (@Id, @UserId, @Title, @Description, @CreatedAt, @Status)",
                 connection))
@@ -105,13 +101,8 @@ public class TaskRepository : IRepository<TaskItem>
 
     public async Task<bool> UpdateAsync(TaskItem task)
     {
-        using (var connection = _dbContext.CreateConnection() as SqlConnection)
+        using (var connection = await CreateConnection())
         {
-            if (connection == null) throw new InvalidOperationException("Failed to create a database connection.");
-
-            await connection.OpenAsync();
-            connection.ChangeDatabase("TuneTaskDB"); // Ensure the correct database is selected
-
             using (var command = new SqlCommand(
                 "UPDATE Tasks SET Title = @Title, Description = @Description, Status = @Status WHERE Id = @Id",
                 connection))
@@ -128,13 +119,8 @@ public class TaskRepository : IRepository<TaskItem>
 
     public async Task<bool> DeleteAsync(Guid id)
     {
-        using (var connection = _dbContext.CreateConnection() as SqlConnection)
+        using (var connection = await CreateConnection())
         {
-            if (connection == null) throw new InvalidOperationException("Failed to create a database connection.");
-
-            await connection.OpenAsync();
-            connection.ChangeDatabase("TuneTaskDB"); // Ensure the correct database is selected
-
             using (var command = new SqlCommand("DELETE FROM Tasks WHERE Id = @Id", connection))
             {
                 command.Parameters.AddWithValue("@Id", id);

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TuneTask.Shared\TuneTask.Shared.csproj" />
     <ProjectReference Include="..\TuneTask.Application\TuneTask.Application.csproj" />
     <ProjectReference Include="..\TuneTask.Core\TuneTask.Core.csproj" />
     <ProjectReference Include="..\TuneTask.Infrastructure\TuneTask.Infrastructure.csproj" />

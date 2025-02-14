@@ -1,5 +1,6 @@
 ﻿using TuneTask.Core.Entities;
 using TuneTask.Core.Interfaces;
+using TuneTask.Shared.Exceptions;
 
 namespace TuneTask.Core.Services;
 
@@ -17,9 +18,13 @@ public class TaskService
         return await _taskRepository.GetAllAsync();
     }
 
-    public async Task<TaskItem?> GetTaskByIdAsync(Guid id)
+    public async Task<TaskItem> GetTaskByIdAsync(Guid taskId)
     {
-        return await _taskRepository.GetByIdAsync(id);
+        var task = await _taskRepository.GetByIdAsync(taskId);
+        if (task == null)
+            throw new TaskNotFoundException(taskId); // 🛑 Throws custom exception
+
+        return task;
     }
 
     public async Task<bool> CreateTaskAsync(TaskItem task)
