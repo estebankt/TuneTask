@@ -63,9 +63,7 @@ docker-compose up --build -d
 
 - **Swagger UI:** `http://localhost:5050/swagger`
 - **API Endpoints:**
-  - **POST** `/api/tasks` – Create a Task (AI-powered insights included)
-  - **GET** `/api/tasks/{id}` – Retrieve a Task
-
+  Endpoints are explained below
 ---
 
 ## 🛡️ **Security & Authentication**
