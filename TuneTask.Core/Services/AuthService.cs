@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Data;
+using System.Security.Cryptography;
 using System.Text;
 using TuneTask.Core.Entities;
 using TuneTask.Core.Interfaces;
@@ -15,7 +16,7 @@ public class AuthService
         _userRepository = userRepository;
     }
 
-    public async Task<bool> RegisterAsync(string username, string email, string password)
+    public async Task<bool> RegisterAsync(string username, string email, string password, string role = "User")
     {
         if (await _userRepository.GetByEmailAsync(email) != null)
             throw new UserAlreadyExistsException(email); 
@@ -24,7 +25,8 @@ public class AuthService
         {
             Username = username,
             Email = email,
-            PasswordHash = HashPassword(password)
+            PasswordHash = HashPassword(password),
+            Role = role
         };
 
         return await _userRepository.CreateAsync(user);

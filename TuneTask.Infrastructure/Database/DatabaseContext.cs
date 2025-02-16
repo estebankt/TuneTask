@@ -39,6 +39,7 @@ public class DatabaseContext
                     "Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(), " +
                     "Username NVARCHAR(100) NOT NULL, " +
                     "Email NVARCHAR(100) NOT NULL, " +
+                    "Role NVARCHAR(100) NOT NULL, " +
                     "PasswordHash NVARCHAR(255) NOT NULL);", connection))
                 {
                     command.ExecuteNonQuery();

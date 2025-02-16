@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TuneTask.Core.Entities;
 using TuneTask.Core.Services;
 
 namespace TuneTask.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/tasks")]
 public class TaskController : ControllerBase
@@ -39,6 +41,7 @@ public class TaskController : ControllerBase
     /// <summary>
     /// Create a new task.
     /// </summary>
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TaskItem task)
     {

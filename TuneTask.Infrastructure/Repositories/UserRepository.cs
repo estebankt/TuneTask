@@ -26,11 +26,29 @@ namespace TuneTask.Infrastructure.Repositories
             return connection;
         }
 
+        public async Task<bool> CreateAsync(User user)
+        {
+            using (var connection = await CreateConnectionAsync())
+            {
+                using (var command = new SqlCommand(
+                    "INSERT INTO Users (Id, Username, Email, PasswordHash, Role) VALUES (@Id, @Username, @Email, @PasswordHash, @Role)", connection))
+                {
+                    command.Parameters.AddWithValue("@Id", user.Id);
+                    command.Parameters.AddWithValue("@Username", user.Username);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
+                    command.Parameters.AddWithValue("@Role", user.Role);
+
+                    return await command.ExecuteNonQueryAsync() > 0;
+                }
+            }
+        }
+
         public async Task<User?> GetByEmailAsync(string email)
         {
             using (var connection = await CreateConnectionAsync())
             {
-                using (var command = new SqlCommand("SELECT Id, Username, Email, PasswordHash FROM Users WHERE Email = @Email", connection))
+                using (var command = new SqlCommand("SELECT Id, Username, Email, PasswordHash, Role FROM Users WHERE Email = @Email", connection))
                 {
                     command.Parameters.AddWithValue("@Email", email);
                     using (var reader = await command.ExecuteReaderAsync())
@@ -42,7 +60,8 @@ namespace TuneTask.Infrastructure.Repositories
                                 Id = reader.GetGuid(0),
                                 Username = reader.GetString(1),
                                 Email = reader.GetString(2),
-                                PasswordHash = reader.GetString(3)
+                                PasswordHash = reader.GetString(3),
+                                Role = reader.GetString(4)
                             };
                         }
                     }
@@ -51,20 +70,5 @@ namespace TuneTask.Infrastructure.Repositories
             return null;
         }
 
-        public async Task<bool> CreateAsync(User user)
-        {
-            using (var connection = await CreateConnectionAsync())
-            {
-                using (var command = new SqlCommand("INSERT INTO Users (Id, Username, Email, PasswordHash) VALUES (@Id, @Username, @Email, @PasswordHash)", connection))
-                {
-                    command.Parameters.AddWithValue("@Id", user.Id);
-                    command.Parameters.AddWithValue("@Username", user.Username);
-                    command.Parameters.AddWithValue("@Email", user.Email);
-                    command.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-
-                    return await command.ExecuteNonQueryAsync() > 0;
-                }
-            }
-        }
     }
 }

@@ -20,7 +20,7 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
     {
-        var success = await _authService.RegisterAsync(dto.Username, dto.Email, dto.Password);
+        var success = await _authService.RegisterAsync(dto.Username, dto.Email, dto.Password, dto.Role);
         if (!success) return BadRequest("Registration failed.");
 
         return Ok(new { message = "User registered successfully." });
@@ -42,6 +42,7 @@ public class UserRegisterDto
     public string Username { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string Role { get; set; }
 }
 
 public class UserLoginDto
