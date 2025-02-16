@@ -1,4 +1,6 @@
-﻿namespace TuneTask.Core.Interfaces;
+﻿using TuneTask.Core.Entities;
+
+namespace TuneTask.Core.Interfaces;
 
 public interface IRepository<T>
 {
@@ -7,4 +9,5 @@ public interface IRepository<T>
     Task<bool> AddAsync(T entity);
     Task<bool> UpdateAsync(T entity);
     Task<bool> DeleteAsync(Guid id);
+    Task<List<T>> SearchTasksAsync(float[] queryEmbedding, int topN = 5);
 }

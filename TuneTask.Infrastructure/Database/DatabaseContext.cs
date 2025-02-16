@@ -50,11 +50,12 @@ public class DatabaseContext
                     "IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Tasks') " +
                     "CREATE TABLE Tasks ( " +
                     "Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(), " +
-                    "UserId UNIQUEIDENTIFIER FOREIGN KEY REFERENCES Users(Id), " +
+                    "UserId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES Users(Id), " +
                     "Title NVARCHAR(255) NOT NULL, " +
                     "Description NVARCHAR(MAX), " +
                     "CreatedAt DATETIME DEFAULT GETDATE(), " +
-                    "Status NVARCHAR(50) CHECK (Status IN ('Pending', 'In Progress', 'Completed')));", connection))
+                    "Status NVARCHAR(50) CHECK (Status IN ('Pending', 'In Progress', 'Completed')) NOT NULL DEFAULT 'Pending', " +
+                    "Embedding NVARCHAR(MAX) NULL);", connection))
                 {
                     command.ExecuteNonQuery();
                 }
@@ -67,7 +68,7 @@ public class DatabaseContext
         }
     }
 
-    public SqlConnection CreateConnection()
+    public virtual IDbConnection CreateConnection()
     {
         return new SqlConnection(_connectionString);
     }

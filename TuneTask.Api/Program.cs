@@ -4,11 +4,13 @@ using TuneTask.Core.Interfaces;
 using TuneTask.Core.Services;
 using TuneTask.Infrastructure.Database;
 using TuneTask.Infrastructure.Repositories;
+using TuneTask.Infrastructure.Services;
 using TuneTask.Shared.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +57,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
 
+// Register AI Service
+builder.Services.AddHttpClient<AIService>();
+builder.Services.AddScoped<IAIService, AIService>();
+
 // Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -66,6 +72,9 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = "An AI-powered Task Manager with Spotify"
     });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
     // Add JWT Authentication
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
