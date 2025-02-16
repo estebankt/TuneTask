@@ -155,6 +155,195 @@ This allows **intelligent task retrieval** based on meaning rather than just key
 
 ---
 
+# TuneTask API
+
+## 🔧 Setup Instructions
+
+### 1️⃣ **Configure OpenAI API Key**
+Replace the token in `appsettings.json` in the `TuneTask.Api` project:
+```json
+"OpenAI": {
+  "ApiKey": "YOUR_OPENAI_API_KEY"
+}
+```
+
+---
+
+## 🚀 API Usage Guide
+
+### 2️⃣ **User Authentication**
+
+#### **🔹 Register a New User**
+**Request:**
+```json
+{
+  "username": "admin1232",
+  "email": "testuser3@example.com",
+  "password": "password",
+  "role": "Admin"
+}
+```
+
+**Response:**
+```json
+200 OK
+{
+  "message": "User registered successfully."
+}
+```
+
+#### **🔹 Login to Get JWT Token**
+**Request:**
+```json
+{
+ "email": "testuser3@example.com",
+  "password": "password"
+}
+```
+
+**Response:**
+```json
+{
+  "token": "<your-jwt-token>"
+}
+```
+
+Copy the `token` value and authenticate with **Bearer + Token** in the `Authorization` header.
+
+---
+
+### 3️⃣ **Task Management**
+
+#### **🔹 Get All Tasks (Admin Only)**
+**Endpoint:**
+```http
+GET /api/tasks/all
+```
+
+#### **🔹 Get Task by ID**
+**Endpoint:**
+```http
+GET /api/tasks/{taskId}
+```
+
+**Example Request:**
+```http
+GET /api/tasks/a5cc4cc0-6084-445e-8874-17ebe5e52da2
+```
+
+**Response:**
+```json
+{
+  "id": "a5cc4cc0-6084-445e-8874-17ebe5e52da2",
+  "userId": "21cc8a68-aec8-402b-9864-179300f491d3",
+  "title": "Deep Focus Coding",
+  "description": "A long coding session with no distractions.",
+  "createdAt": "2025-02-16T16:18:40.207",
+  "status": 0,
+  "embedding": null
+}
+```
+
+---
+
+### 4️⃣ **Create a Task**
+
+**Endpoint:**
+```http
+POST /api/tasks/create
+```
+
+**Example Request:**
+```json
+{
+  "title": "Documentation",
+  "description": "Document something about a book Old Man and the Sea"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "e299ccae-ef53-4705-8e13-149be59e55da",
+  "userId": "e9fe53b5-ee15-4a23-9187-fa96578635c2",
+  "title": "Setting up dev environment",
+  "description": "Clone repository and have it running on local machine",
+  "createdAt": "2025-02-16T20:11:52.4851879Z",
+  "status": 0,
+  "embedding": [ ... , .. , .., ]
+}
+```
+
+---
+
+### 5️⃣ **Update a Task**
+
+**Endpoint:**
+```http
+PUT /api/tasks/update/{taskId}
+```
+
+**Example Request:**
+```json
+{
+  "id": "e299ccae-ef53-4705-8e13-149be59e55da",
+  "description": "changed"
+}
+```
+
+**Response:**
+- `204 No Content` (Success)
+- `"Task not found."` (If Task ID does not exist)
+
+---
+
+### 6️⃣ **Delete a Task**
+
+**Endpoint:**
+```http
+DELETE /api/tasks/delete/{taskId}
+```
+
+**Response:**
+- `204 No Content` (Success)
+- `"Task not found."` (If Task ID does not exist)
+
+---
+
+### 7️⃣ **AI-Powered Task Search**
+
+**Endpoint:**
+```http
+GET /api/tasks/search?query=<search-term>
+```
+
+**Example:**
+```http
+GET /api/tasks/search?query=focus
+```
+
+**Response:** _(Ordered by best match)_
+```json
+[
+  {
+    "id": "abc123",
+    "title": "Deep Focus Coding",
+    "description": "A long coding session with no distractions.",
+    "createdAt": "2025-02-16T16:18:40.207",
+    "status": 0
+  },
+  {
+    "id": "xyz456",
+    "title": "Focused Writing",
+    "description": "Writing session with noise-canceling headphones.",
+    "createdAt": "2025-02-16T18:22:10.119",
+    "status": 0
+  }
+]
+```
+
+
+
 ## 📜 **License**
 
 This project is licensed under the MIT License.
