@@ -52,12 +52,18 @@ git clone https://github.com/estebankt/TuneTask.git
 cd TuneTask
 ```
 
+### **2️⃣ Configure OpenAI API Key**
+Replace the token in `appsettings.json` in the `TuneTask.Api` project:
+```json
+"OpenAI": {
+  "ApiKey": "YOUR_OPENAI_API_KEY"
+}
+```
+
 
 ### **3️⃣ Run the Application with Docker**
 
-```sh
-docker-compose up --build -d
-```
+run docker compose from Visual Studio
 
 ### **4️⃣ Access the API**
 
@@ -151,19 +157,6 @@ Instead of returning tasks based on **exact word matches**, the system recognize
 
 This allows **intelligent task retrieval** based on meaning rather than just keywords.
 
----
-
-# TuneTask API
-
-## 🔧 Setup Instructions
-
-### 1️⃣ **Configure OpenAI API Key**
-Replace the token in `appsettings.json` in the `TuneTask.Api` project:
-```json
-"OpenAI": {
-  "ApiKey": "YOUR_OPENAI_API_KEY"
-}
-```
 
 ---
 
