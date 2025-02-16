@@ -18,9 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TuneTask.Shared\TuneTask.Shared.csproj" />
+    <ProjectReference Include="..\TuneTask.Shared\TuneTask.Shared.csproj" />
     <ProjectReference Include="..\TuneTask.Core\TuneTask.Core.csproj" />
     <ProjectReference Include="..\TuneTask.Infrastructure\TuneTask.Infrastructure.csproj" />
+    <ProjectReference Include="..\TuneTask.Shared\TuneTask.Shared.csproj" />
   </ItemGroup>
 
 </Project>
