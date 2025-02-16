@@ -8,7 +8,7 @@ public class TaskItem
     public string Description { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public TaskStatus Status { get; set; } = TaskStatus.Pending;
-    public float[]? Embedding { get; set; } // this is for ai powered search
+    public float[]? Embedding { get; set; } 
 }
 
 public enum TaskStatus
