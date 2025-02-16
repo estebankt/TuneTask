@@ -48,7 +48,7 @@ TuneTask follows **Clean Architecture** principles:
 ### **1️⃣ Clone the Repository**
 
 ```sh
-git clone https://github.com/yourusername/TuneTask.git
+git clone https://github.com/estebankt/TuneTask.git
 cd TuneTask
 ```
 
@@ -61,7 +61,7 @@ docker-compose up --build -d
 
 ### **4️⃣ Access the API**
 
-- **Swagger UI:** `http://localhost:5050/swagger`
+- **Swagger UI:** `http://localhost:5051/swagger`
 - **API Endpoints:**
   Endpoints are explained below
 ---
