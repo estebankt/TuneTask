@@ -50,12 +50,12 @@ builder.Services.AddSingleton(new DatabaseContext(connectionString));
 
 // Register Task Repository & Task Service
 builder.Services.AddScoped<IRepository<TaskItem>, TaskRepository>();
-builder.Services.AddScoped<TaskService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 //Register Auth services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // Register AI Service
 builder.Services.AddHttpClient<AIService>();

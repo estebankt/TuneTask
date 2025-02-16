@@ -4,10 +4,11 @@ using System.Security.Claims;
 using System.Text;
 using TuneTask.Core.Entities;
 using Microsoft.Extensions.Configuration;
+using TuneTask.Core.Interfaces;
 
 namespace TuneTask.Core.Services;
 
-public class JwtService
+public class JwtService : IJwtService
 {
     private readonly string _secretKey;
 

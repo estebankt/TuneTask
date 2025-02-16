@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TuneTask.Api\TuneTask.Api.csproj" />
     <ProjectReference Include="..\TuneTask.Core\TuneTask.Core.csproj" />
     <ProjectReference Include="..\TuneTask.Infrastructure\TuneTask.Infrastructure.csproj" />
   </ItemGroup>

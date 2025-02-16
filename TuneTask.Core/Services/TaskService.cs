@@ -4,7 +4,7 @@ using TuneTask.Shared.Exceptions;
 
 namespace TuneTask.Core.Services;
 
-public class TaskService
+public class TaskService : ITaskService
 {
     private readonly IRepository<TaskItem> _taskRepository;
     private readonly IAIService _aiService;

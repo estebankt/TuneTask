@@ -7,7 +7,7 @@ using TuneTask.Shared.Exceptions;
 
 namespace TuneTask.Core.Services;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly IUserRepository _userRepository;
 
@@ -41,14 +41,14 @@ public class AuthService
         return user;
     }
 
-    private string HashPassword(string password)
+    public string HashPassword(string password)
     {
         using var sha256 = SHA256.Create();
         var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
         return Convert.ToBase64String(bytes);
     }
 
-    private bool VerifyPassword(string password, string storedHash)
+    public bool VerifyPassword(string password, string storedHash)
     {
         return HashPassword(password) == storedHash;
     }

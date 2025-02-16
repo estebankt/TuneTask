@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TuneTask.Core.Entities;
-using TuneTask.Core.Services;
 using System.Security.Claims;
+using TuneTask.Core.Interfaces;
 
 namespace TuneTask.API.Controllers;
 
@@ -11,9 +11,9 @@ namespace TuneTask.API.Controllers;
 [Route("api/tasks")]
 public class TaskController : ControllerBase
 {
-    private readonly TaskService _taskService;
+    private readonly ITaskService _taskService;
 
-    public TaskController(TaskService taskService)
+    public TaskController(ITaskService taskService)
     {
         _taskService = taskService;
     }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TuneTask.Core.Entities;
 using TuneTask.Core.Services;
-using System.ComponentModel.DataAnnotations; // Import for data annotations
+using System.ComponentModel.DataAnnotations;
+using TuneTask.Core.Interfaces; // Import for data annotations
 
 namespace TuneTask.API.Controllers;
 
@@ -9,10 +9,10 @@ namespace TuneTask.API.Controllers;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly AuthService _authService;
-    private readonly JwtService _jwtService;
+    private readonly IAuthService _authService;
+    private readonly IJwtService _jwtService;
 
-    public AuthController(AuthService authService, JwtService jwtService)
+    public AuthController(IAuthService authService, IJwtService jwtService)
     {
         _authService = authService;
         _jwtService = jwtService;
